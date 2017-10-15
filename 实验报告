@@ -1,0 +1,49 @@
+#include<iostream>
+#include<iomanip>
+#include<stdlib.h>
+using namespace std;
+int main()
+{
+	int n,x1,x2,x3,x4,s1,s2,s3,s4;
+	cout<<"***************************************************"<<'\n';
+	cout<<"*           欢迎使用学生成绩管理系统1.1           *"<<'\n';
+	cout<<"*   蔡瑾文 黄媛媛 郑素华 计算机1706班 2017.10.11  *"<<'\n';
+	cout<<"*      1、输入4个同学的代号和成绩                 *"<<'\n';
+	cout<<"*      2、显示4个同学的代号和成绩列表             *"<<'\n';
+	cout<<"*      3、求4人平均分                             *"<<'\n';
+	cout<<"*      4、求4人总分                               *"<<'\n';
+	cout<<"*      5、查询某同学的分数                        *"<<'\n';
+	cout<<"*      6、统计及格率                              *"<<'\n';
+	cout<<"*      7、退出                                    *"<<'\n';
+	cout<<"*                请输入(1-7)选择:                 *"<<'\n';
+	cout<<"***************************************************"<<endl;
+	while(cin>>n)
+	{
+	switch(n)
+	{
+	case 1:cout<<"请输入4个同学的代号和成绩";
+	cin>>x1>>s1>>x2>>s2>>x3>>s3>>x4>>s4;
+	cout<<"输入完毕"<<endl; break;
+	case 2:cout<<"代号"<<setw(10)<<"成绩列表"<<endl; 
+	cout<<x1<<setw(10)<<s1<<endl;
+	cout<<x2<<setw(10)<<s2<<endl;
+	cout<<x3<<setw(10)<<s3<<endl;
+	cout<<x4<<setw(10)<<s4<<endl;break;
+	case 3:cin>>s1>>s2>>s3>>s4;
+	(s1+s2+s3+s4)/4;
+	cout<<"四人的平均分为："<<(s1+s2+s3+s4)/4<<endl;break;
+	case 4:cin>>s1>>s2>>s3>>s4;
+	s1+s2+s3+s4;
+	cout<<"四人总分为:"<<s1+s2+s3+s4<<endl;break;
+	case 5:cout<<"同学代号："<<endl;
+	cin>>x1; cout<<"成绩为："<<s1<<endl;
+	cin>>x2; cout<<"成绩为："<<s2<<endl; 
+	cin>>x3; cout<<"成绩为："<<s3<<endl;
+	cin>>x4; cout<<"成绩为："<<s4<<endl;
+	case 6:cout<<"及格率为："<<endl	;
+	case 7:	cout<<"即将退出 loading...."<<endl ;break;exit(0);
+	default :;
+	}
+	return 0;
+}
+}
