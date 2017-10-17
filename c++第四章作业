@@ -1,0 +1,63 @@
+#include <iostream>
+using namespace std;
+int main()
+{
+	int year;
+	cout<<"输入年份：";
+	cin>>year;
+	if((year%4==0&&year%100!=0)||(year%400==0))
+	cout<<"该年份为闰年"<<endl;
+	  else cout<<"该年份为平年"<<endl;
+	  return 0; 
+ } 
+ 
+ #include <iostream>
+using namespace std;
+int main()
+{
+	int i,j;
+	for(i=4;i>=1;i--)
+	{for(j=1;j<=4-i;j++)
+        cout<<" ";
+        
+        for(j=1;j<=i*2-1;j++)
+        cout<<"*";
+        cout<<endl;
+	}
+	for(i=1;i<=3;i++)
+	{for(j=1;j<=3-i;j++)
+	cout<<" ";
+	
+	for(j=1;j<=2*i+1;j++)
+	cout<<"*";
+	cout<<endl;
+	}
+	return 0;
+}
+
+#include <iostream>
+using namespace std;
+int main()
+{
+	int i,j,k,N,n=0;
+	cout<<"请输入一个正整数N:";
+	cin>>N;
+	{
+		for(i=1;i<=N;i++)
+		{
+			for(j=1;j<=N/2;j++)
+			{
+				for(k=1;k<=N/5;k++)
+				{
+					if(i*1+j*2+k*5==N)
+					{
+					cout<<"一元有："<<i<<"张"<<endl<<"两元有："<<j<<"张"<<endl<<"五元有："<<k<<"张"<<endl; 
+					n++;}
+				cout<<endl;
+				}
+			}
+		}
+	}
+	cout<<"一共有多少种组合："<<n<<endl;
+	return 0;
+}
