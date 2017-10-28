@@ -1,0 +1,66 @@
+#include <iostream>
+using namespace std;
+float anv(float a,float b,float c,float d)
+{
+	return ((a+b+c+d)/4);
+}
+int main()
+{
+	float a,b,c,d,e;
+	cout<<"输入4个数字：";
+	cin>>a>>b>>c>>d;
+	e=anv(a,b,c,d);
+	cout<<"平均数为："<<e<<endl; 
+	return 0;
+}
+
+
+#include <iostream>
+using namespace std;
+int min(int,int);
+double min(double,double);
+int main()
+{
+	int a,b;
+	cout<<"请输入两个整数进行比较：";	cin>>a>>b;
+	cout<<"较小值为："<<min(a,b)<<endl;
+	double c,d;
+	cout<<"请输入两个实数进行比较：";	cin>>c>>d;
+	cout<<"较小值为："<<min(c,d)<<endl;
+return 0;
+}
+int min(int x,int y)
+{
+	return (x<y?x:y);	
+} 
+double min(double x,double y)
+{
+	return (x<y?x:y);
+}
+
+
+#include <iostream>
+using namespace std;
+void din(int);
+int main()
+{
+	int s,h;
+	cout<<"请输入一个十进制整数：";
+	cin>>s;
+	cout<<"二进制数：";
+	din (s);	 
+	return 0;
+}
+void din(int n)
+{
+ 	if (n == 0)
+ 	{
+  		return;
+ 	}
+ 	else
+ 	{
+  		din (n/2);
+  		n=n%2;
+  		cout<<n;
+ 	}
+}
