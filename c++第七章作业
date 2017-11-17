@@ -1,0 +1,99 @@
+
+
+#include <iostream>
+using namespace std;
+void my_strlwr(char *s)
+{
+	int i;
+	for(i=0;s[i]!='\0';i++)
+		if(s[i]>='A'&&s[i]<='Z')
+		s[i]+=32;
+}
+int main()
+{
+	char c[200];
+	cin>>c; 
+	my_strlwr(c);
+	cout<<c;
+	return 0;
+}#include <iostream>
+using namespace std;
+int main()
+{
+	int num,a[10],n=0,i=0;
+cout<<"请输入需要转换的数：";
+cin>>num;
+	while(num){
+		a[i]=num%16;
+		num/=16;
+		i++;
+		n++;
+	}
+	cout<<"转换后的数为：0x";
+	for(i=n-1;i>=0;i--){
+		if(a[i]>9){
+			switch(a[i]){
+				case 10:cout<<"A";break;
+				case 11:cout<<"B";break;
+				case 12:cout<<"C";break;
+				case 13:cout<<"D";break;
+				case 14:cout<<"E";break;
+				case 15:cout<<"F";break;
+				default: break;
+			}
+		}
+		else cout<<a[i];
+	}
+	cout<<endl;
+	return 0;
+}
+
+
+#include <iostream>
+using namespace std;
+void my_strlwr(char *s)
+{
+	int i;
+	for(i=0;s[i]!='\0';i++)
+		if(s[i]>='A'&&s[i]<='Z')
+		s[i]+=32;
+}
+int main()
+{
+	char c[200];
+	cin>>c; 
+	my_strlwr(c);
+	cout<<c;
+	return 0;
+}
+
+
+
+
+#include <iostream>
+using namespace std; 
+int fun(int a[M][N]，int M,int N)
+{
+	int i,j,sum=0;
+	for(i=0;i<N;i++){
+		sum+=a[0][i];
+		sum+=a[M-1][i];
+	}
+	for(j=1;j<M-1;j++){
+		sum+=a[j][0];
+		sum+=a[j][N-1];
+	}
+	return sum;
+}
+int main()
+{
+	int a[5][5];
+	int i,j;
+	for(i=0;i<5;i++){
+		for(j=0;j<5j++)
+		cin>>a[i][j];
+	}
+	fun(int a)
+	cout<<sum;
+	return 0;
+}
