@@ -1,0 +1,144 @@
+
+
+#include<iostream>
+#include<iomanip>  
+using namespace std;  
+int main()  
+{  
+    cout<<"请输入数组元素："<<endl;    
+    int n=4,m=5;   //假设数组为4行5列  
+    int a[n][m];  
+    int i,j,max,maxj;  
+    bool flag;      //定义布尔变量  
+    for(i=0;i<n;i++)  //输入数组元素  
+    {  
+        for(j=0;j<m;j++)  
+        {  
+            cin>>a[i][j];  
+        }  
+    }  
+    for(i=0;i<n;i++)   //输出矩阵  
+    {  
+        for(j=0;j<m;j++)  
+        {  
+            cout<<setw(5)<<a[i][j];  
+        }  
+        cout<<endl;  
+    }  
+  
+    for(i=0;i<n;i++)   //开始时，假设a[i][0]最大，将列号（0）赋给maxj保存   
+    {  
+        max=a[i][0];maxj=0;  
+  
+        for(j=0;j<m;j++)    //找出第i行中的最大数  
+        {  
+            if(max<a[i][j])  
+            {  
+                max=a[i][j];  //将本行的最大数存放在max中  
+  
+                maxj=j;    //将最大数所在的列号存放在maxj中  
+            }  
+        }  
+        flag=true;    //先假设是鞍点，用flag为真来代表  
+        for(int k=0;k<n;k++)  
+        {  
+            if(max>a[k][maxj])  //将最大数和其同分裂元素相比  
+            {  
+                flag=false;     //如果max不是同列最小，表示不是鞍点，令flag为假  
+#include <iostream>
+using namespace std;
+
+struct student
+{
+	char name;
+	int course1,course2,course3;
+	int average;
+};
+student Input()
+{
+	student stud;
+	cout<<"请输入学生姓名及各科成绩：";
+	cin>>stud.name>>stud.course1 >>stud.course2 >>stud.course3;
+	stud.average=(stud.course1+stud.course2+stud.course3)/3;
+	return stud;
+}
+void Output(student stud)
+{
+//	int average;
+//	average=(stud.course1+stud.course2+stud.course3)/3;
+	cout<<'\t'<<stud.name<<'\t'<<stud.course1<<'\t'<<stud.course2<<'\t'<<stud.course3<<'\t'<<stud.average<<endl;
+} 
+int main()
+{
+	int i;
+	struct student t;
+	student studs[4];
+	for(i=0;i<4;i++)
+		studs[i]=Input();
+	cout<<'\t'<<"学生"<<'\t'<<"课程1"<<'\t'<<"课程2"<<'\t'<<"课程3"<<'\t'<<"平均分"<<endl;
+	int j;
+	for(i=0;i<4-1;i++)
+		for(j=0;j<4-1-i;j++)
+			if(studs[j].average>studs[j+1].average)
+			{
+				t=studs[j];studs[j]=studs[j+1];studs[j+1]=t;
+			}	
+	for(i=0;i<4;i++)
+	cout<<'\t'<<studs[i].name<<'\t'<<studs[i].course1<<'\t'<<studs[i].course2<<'\t'<<studs[i].course3<<'\t'<<studs[i].average<<endl;			
+//		Output(studs[i]);
+	cout<<endl;
+	return 0; 
+}
+                continue;  
+            }  
+        }  
+        if(flag)            //如果flag为真表示是鞍点  
+        {  
+            cout<<"a["<<i<<"]["<<maxj<<"]="<<max<<endl;   //输出鞍点的值和其所在的行号和列号  
+            break;  
+        }  
+    }  
+    if(!flag)  //如果flag为假，表示鞍点不存在  
+    {          cout<<"不存在鞍点！"<<endl;   }   
+    cout<<endl;    
+    return 0;  
+} 
+
+
+
+
+#include <iostream>
+using namespace std;
+#include <cstring>
+int count (char mstr[], char sstr[])
+{
+	int i,j,k,num=0;
+	for(i=0;mstr[i]!='\0';i++){
+		for(j=i,k=0;mstr[j]!='\0'&&sstr[k]==mstr[j];j++,k++)
+			;
+		if(sstr[k]=='\0')
+			num++;
+	}
+	return num;
+}
+int main()
+{
+	int num,num1,num2,num3;
+	char mstring[80],sstring1[80]="the",sstring2[80]="The",sstring3[80]="THE";
+	cout<<"请输入主串：";
+	cin.getline(mstring,80);
+//	cout<<"请输入子串：";
+//	cin.getline(sstring,80);
+	num1=count(mstring,sstring1);
+	num2=count(mstring,sstring2);
+	num3=count(mstring,sstring3);
+	num=num1+num2+num3;
+	if(num>0)
+		cout<<"子串在主串中出现的次数为："<<num<<endl;
+	else
+		cout<<"子串不在主串中！"<<endl; 
+return 0;
+}
+
+
+
