@@ -1,0 +1,28 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+void stat(char *a,int n)
+{
+	int word=0,number=0,null=0,other=0;
+	int i;
+	for(i=0;i<n;i++){
+		if(*(a+i)>='A'&&*(a+i)<='Z') word+=1;
+		else if (*(a+i)>='a'&&*(a+i)<='z') word+=1;
+		else if (*(a+i)>='0'&&*(a+i)<='9') number+=1;
+		else if (*(a+i)==' ') null+=1;
+		else other+=1;
+	}
+	cout<<"word = "<<word<<'\t'<<"number = "<<number<<'\t'<<"null = "<<null<<'\t'<<"other = "<<other<<'\n';
+}
+int main()
+{
+	char str[1000];
+	cin.getline(str,1000);
+	int i,n;
+	n=strlen(str);
+	for(i=0;i<n;i++)
+		cout<<str[i];
+	cout<<endl;
+	stat(str,n);
+	return 0;
+} 
