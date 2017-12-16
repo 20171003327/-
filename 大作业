@@ -1,0 +1,335 @@
+//课题名：学生成绩管理系统
+//小组成员：郑素华20171003329 计算机1706 
+//          黄媛媛20171003331 计算机1706
+//          蔡瑾文20171003327 计算机1706
+//分工： 郑素华： 增加\显示学生成绩 
+//       蔡瑾文： 排序\查找学生成绩 
+//	     黄媛媛： 删除\修改学生成绩 
+//时间：2017.12.16 
+
+#define MAX_NUM 20
+#include <string.h>
+#include <iostream>
+#include <fstream>
+#include <conio.h>
+using namespace std;
+
+class Student  
+{  
+public:  
+ char name[20];  
+ char Id[20];  
+ int chinese;      
+ int math;        
+ int english;        
+ int sum;             
+ Student * Next;  
+ void Input()  
+ {  
+  cout<<"\t\t请输入学生的姓名：";  cin>>name;  
+  cout<<"\t\t请输入学生的学号：";  cin>>Id;  
+  cout<<"\t\t请输入该学生的语文成绩：";  cin>>chinese;  
+  cout<<"\t\t请输入该学生的数学成绩：";  cin>>math;  
+  cout<<"\t\t请输入该学生的英语成绩：";  cin>>english;  
+  sum=chinese+math+english;  
+ }  
+ void ReadFile(istream & in)  
+ {  
+  in>>name>>Id>>chinese>>math>>english>>sum;  
+ }  
+ void Show()  
+ {  
+  cout<<"姓名:"<<name<<endl<<"学号:"<<Id<<endl<<"语文成绩："<<chinese<<endl  
+   <<"数学成绩："<<math<<endl<<"英语成绩："<<english<<endl<<"总成绩:"<<sum<<endl;  
+ }  
+};  
+  
+class Studentmassage  
+{  
+public:  
+ Studentmassage();  
+ ~Studentmassage();  
+ void ShowMenu();  
+ void Find();  
+ void Save();  
+ void ModifyItem();  
+ void RemoveItem();  
+ void Swap(Student *,Student *);  
+ void Sort();  
+ int ListCount();   
+ void Display()  
+ {  
+  for(Student * p=Head->Next;p!=End;p=p->Next)  
+   p->Show();  
+  cout<<"输入任意字符！继续……";  
+  getch();  
+ }  
+ void AddItem()  
+ {  
+  End->Input();  
+  End->Next=new Student;  
+  End=End->Next;  
+  cout<<"添加成功!"<<endl;  
+  cout<<"输入任意字符！继续……";  
+  getch();  
+ }  
+private:  
+ Student * Head,* End;  
+ ifstream in;  
+ ofstream out;  
+ Student *FindItem(char * name)  
+ {  
+  for(Student * p=Head;p->Next!=End;p=p->Next)
+   if(!strcmp(p->Next->name,name))return p;  
+   return NULL;  
+ }  
+ Student *FindID(char * Id)  
+ {  
+  for(Student * p=Head;p->Next!=End;p=p->Next) 
+   if(!strcmp(p->Next->Id,Id))return p;  
+   return NULL;  
+ }  
+};  
+   
+Studentmassage::Studentmassage()  
+{  
+ Head=new Student;  
+ Head->Next=new Student;  
+ End=Head->Next;  
+ in.open("sort.txt");  
+ if(!in)  
+  cout<<"该系统目前无学生成绩信息,请先输入"<<endl;  
+ else  
+ {  
+  while(!in.eof())  
+  {  
+   End->ReadFile(in);  
+   if(End->name[0]=='\0')break;  
+   End->Next=new Student;  
+   End=End->Next;  
+  }  
+  in.close();  
+  cout<<"\t\t读取学生信息成功!"<<endl;  
+ }  
+}  
+    
+Studentmassage::~Studentmassage()  
+{  
+ Save();  
+ for(Student * temp;Head->Next!=End;)  
+ {  
+  temp=Head->Next;  
+  Head->Next=Head->Next->Next;  
+  delete temp;  
+ }  
+ delete Head,End;  
+}  
+  
+void Studentmassage::ShowMenu()                    
+{  
+  cout<<"\t\t\t\t┌──────────────────────────┐"<<endl;  
+  cout<<"\t\t\t\t│                                                    │"<<endl;  
+  cout<<"\t\t\t\t│             学 生 成 绩 管 理 系 统                │"<<endl;  
+  cout<<"\t\t\t\t│                     第二小组                       │"<<endl;  
+  cout<<"\t\t\t\t│                  1.增加学生成绩                    │"<<endl;  
+  cout<<"\t\t\t\t│                  2.显示学生成绩                    │"<<endl;  
+  cout<<"\t\t\t\t│                  3.排序学生成绩                    │"<<endl;  
+  cout<<"\t\t\t\t│                  4.查找学生成绩                    │"<<endl;  
+  cout<<"\t\t\t\t│                  5.删除学生成绩                    │"<<endl;  
+  cout<<"\t\t\t\t│                  6.修改学生成绩                    │"<<endl;  
+  cout<<"\t\t\t\t│                  0.退出系统                        │"<<endl;  
+  cout<<"\t\t\t\t│                                                    │"<<endl;  
+  cout<<"\t\t\t\t└──────────────────────────┘\n"<<endl;
+  cout<<"\n\t\t\n\t\t请选择：";  
+}  
+   
+void Studentmassage::Find()  
+{  
+ char name[20] ,Id[10];  
+ int x;  
+ Student * p=NULL;  
+ cout<<"\n\t\t*********************************\n";  
+ cout<<"\t\t※ 1.按学生的姓名查找\n\t\t※ 2.按学生学号查找";  
+ cout<<"\n\t\t*********************************\n请选择：";  
+ cin>>x;  
+ switch(x)  
+ {  
+ case 1:{cout<<"\t\t请输入要查找的学生的姓名：";cin>>name;  
+  if(p=FindItem(name))  
+  {  
+   p->Next->Show();  
+   cout<<"输入任意字符！继续……";  
+   getch();  
+  }  
+  else  
+  {  
+   cout<<"\t\t没有找到姓名为"<<name<<"的学生！"<<'\n'<<endl;  
+   cout<<"输入任意字符！继续……";  
+   getch();  
+  }  
+     }break;  
+ case 2:  
+  {  
+   cout<<"\t\t请输入要查找的学生的学号：";cin>>Id;  
+   if(p=FindID(Id))  
+   {  
+    p->Next->Show();  
+    cout<<"输入任意字符！继续……";  
+    getch();  
+   }  
+   else  
+   {  
+    cout<<"\t\t没有找到学号为"<<Id<<"的学生！"<<'\n'<<endl;  
+    cout<<"输入任意字符！继续……";  
+    getch();  
+   }  
+  }break;  
+ }  
+   
+}  
+  
+void Studentmassage::ModifyItem()    
+{  
+ char name[20];  
+ Student * p=NULL;  
+ cout<<"\t\t请输入要修改的人的姓名:";cin>>name;  
+ if(p=FindItem(name))  
+ {  
+  cout<<"\t\t已找到学生的信息，请输入新的信息!"<<endl;  
+  p->Next->Input();  
+  cout<<"修改成功！"<<endl;  
+  cout<<"输入任意字符！继续……";  
+  getch();  
+ }  
+ else  
+ {  
+  cout<<"\t\t没有找到!"<<endl;  
+  cout<<"输入任意字符！继续……";  
+  getch();  
+ }  
+}  
+  
+
+void Studentmassage::RemoveItem()        
+{  
+ char name[20];  
+ Student * p=NULL,*temp=NULL;  
+ cout<<"\t\t请输入要删除的学生的姓名:"<<endl;cin>>name;  
+ if(p=FindItem(name))  
+ {  
+  temp=p->Next;  
+  p->Next=p->Next->Next;   
+  delete temp;  
+  cout<<"\t\t删除成功!"<<endl;  
+  cout<<"输入任意字符！继续……";  
+  getch();  
+ }  
+ else  
+ {  
+  cout<<"\t\t没有找到!"<<endl;  
+     cout<<"输入任意字符！继续……";  
+  getch();  
+ }  
+}  
+  
+
+void Studentmassage::Swap(Student *p1, Student *p2)
+{  
+ Student *temp=new Student;   
+ strcpy(temp->name,p1->name);  
+ strcpy(temp->Id,p1->Id);  
+ temp->chinese=p1->chinese;  
+ temp->math=p1->math;  
+ temp->english=p1->english;  
+ temp->sum=p1->sum;  
+   
+ strcpy(p1->name,p2->name);  
+ strcpy(p1->Id,p2->Id);  
+ p1->chinese=p2->chinese;  
+ p1->math=p2->math;  
+ p1->english=p2->english;  
+ p1->sum=p2->sum;  
+   
+ strcpy(p2->name,temp->name);  
+ strcpy(p2->Id,temp->Id);  
+ p2->chinese=temp->chinese;  
+ p2->math=temp->math;  
+ p2->english=temp->english;  
+ p2->sum=temp->sum;  
+}  
+  
+
+int Studentmassage::ListCount()
+ {
+ if(! Head)  
+  return 0;  
+ int n=0;  
+ for(Student * p=Head->Next;p!=End;p=p->Next)  
+ {  
+  n++;  
+ }  
+ return n;  
+}  
+  
+void Studentmassage::Sort()
+{   
+ cout <<"Sorting..."<<endl;  
+ Student *p=NULL,*p1=NULL,*k=NULL;  
+ int n=Studentmassage::ListCount();  
+ if(n<2)   
+  return;  
+ for(p=Head->Next;p!=End;p=p->Next)  
+  for(k=p->Next;k!=End;k=k->Next)  
+  {  
+   if(p->sum>k->sum)  
+   {  
+    Studentmassage::Swap(p,k);  
+   }  
+  }  
+ cout <<"排序完成！"<<endl;  
+ getch();  
+ return;  
+}  
+  
+
+void Studentmassage::Save()  
+{  
+ out.open("sort.txt");  
+ for(Student *p=Head->Next;p!=End;p=p->Next)  
+  out<<p->name<<"\t"<<p->Id<<"\t"<<p->chinese<<"\t"  
+  <<p->math<<"\t"<<p->english<<"\t"<<p->sum<<'\n';  
+ out.close();  
+}  
+   
+int main()  
+{  
+ int x,i=0;  
+ bool quit=false;  
+ cout<<"\t\t\t\t┌──────────────────────────┐"<<endl;  
+ for(i=0;i<3;i++)  
+  cout<<"\t\t\t\t│                                                    │"<<endl;  
+ cout<<" \t\t\t\t├─────【  欢迎进入学生成绩管理系统  】─────┤"<<endl;  
+ for(i=0;i<3;i++)   
+  cout<<"\t\t\t\t│                                                    │"<<endl;  
+ cout<<" \t\t\t\t└──────────────────────────┘\n"<<endl; 
+ Studentmassage Grade;  
+ cout<<"输入任意值进入系统菜单";  
+  getch();  
+ while(!quit)  
+ {  
+  system("cls");  
+  Grade.ShowMenu();  
+  cin>>x;  
+  switch(x)  
+  {  
+  case 0:quit=true;break;  
+  case 1:Grade.AddItem();break;  
+  case 2:Grade.Display();break;  
+  case 3:Grade.Sort();break;  
+  case 4:Grade.Find();break;  
+  case 5:Grade.RemoveItem();break;  
+  case 6:Grade.ModifyItem();break;  
+  }  
+ }  
+ return 0;  
+}
